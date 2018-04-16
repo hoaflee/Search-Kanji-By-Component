@@ -1,33 +1,25 @@
 <template>
-  <div id="app">
-    <v-app id="inspire">
-      <page-header/>
-      <v-content>
-        <v-container fluid>
-          <router-view></router-view>
-        </v-container>
-      </v-content>
-    </v-app>
+  <div>
+    <transition mode="out-in">
+      <router-view></router-view>
+    </transition>
   </div>
 </template>
 
 <script>
-import PageHeader from '@/components/Globals/Header.vue'
+
 export default {
-  name: 'App',
-  components: {
-    PageHeader
+  data () {
+    return {
+
+    }
+  },
+  methods: {
+
+  },
+  created () {
+    // this.$http.get('/users').then(({data}) => console.log(data))
   }
 }
 </script>
 
-<style>
-#app {
-  font-family: 'Avenir', Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-  /* margin-top: 60px; */
-}
-</style>
