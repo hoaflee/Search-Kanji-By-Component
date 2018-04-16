@@ -23,9 +23,11 @@ module.exports = {
           }))
         }
       })
+      const uniqParts = _.uniq(_.flatMap(kanjis, p => p.part.split(' ')))
       const result = {
-        kanji: _.uniq(_.flatMap(kanjis, 'gaiji')),
-        part: _.differenceWith(_.uniq(_.flatMap(kanjis, p => p.part.split(' '))), searchKeyArray, _.isEqual)
+        gaijis: _.flatMap(kanjis, 'gaiji'),
+        parts: _.differenceWith(uniqParts, searchKeyArray, _.isEqual),
+        selectedParts: _.intersectionWith(uniqParts, searchKeyArray, _.isEqual)
       }
       res.send(result)
     } catch (err) {
