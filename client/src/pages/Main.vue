@@ -3,15 +3,15 @@ v-app(:dark="dark",standalone)
   v-navigation-drawer(v-model='drawer',:mini-variant.sync="mini", persistent,enable-resize-watcher, :dark="dark")
     .pa-3.text-xs-center(v-show="!mini")
       div.display-2.py-4 Adminify
-      p {{$t('An admin dashboard')}}
+      p {{Title}}
       div(style="padding-left:5em")
         v-switch(:label="(!dark ? 'Light' : 'Dark') + ' Theme'", v-model="dark", :dark="dark", hide-details)
-      div
-        //- v-btn(dark, tag="a", href="https://github.com/wxs77577/adminify", primary)
-          v-icon(left, dark) star
-          span Github 
-    .pa-3.text-xs-center(v-show="mini")
-      .display-2 A
+      //- div
+      //-   v-btn(dark, tag="a", href="https://github.com/wxs77577/adminify", primary)
+      //-     v-icon(left, dark) star
+      //-     span Github 
+    //- .pa-3.text-xs-center(v-show="mini")
+      //- .display-2 AAAAAAAA
     v-divider
     v-list(dense)
       template(v-for='item in menu')
@@ -20,7 +20,7 @@ v-app(:dark="dark",standalone)
             v-list-tile-action
               v-icon() {{ item.icon }}
             v-list-tile-content
-              v-list-tile-title {{ $t(item.title) }}
+              v-list-tile-title {{ item.title }}
             v-list-tile-action
               v-icon() keyboard_arrow_down
           
@@ -28,7 +28,7 @@ v-app(:dark="dark",standalone)
             v-list-tile-action(v-if='subItem.icon')
               v-icon.success--text {{ subItem.icon }}
             v-list-tile-content
-              v-list-tile-title {{ $t(subItem.title) }}
+              v-list-tile-title {{ subItem.title }}
         v-subheader(v-else-if='item.header') {{ item.header }}
         v-divider(v-else-if='item.divider')
         v-list-tile(v-else,:to='item.href', router, ripple, v-bind:disabled='item.disabled', :title="item.title")
@@ -40,7 +40,7 @@ v-app(:dark="dark",standalone)
             v-icon.success--text {{ item.subAction }}
   v-toolbar.darken-1(fixed,dark,:class="theme") 
     v-toolbar-side-icon(dark, @click.stop='drawer = !drawer')
-    v-toolbar-title {{$t(pageTitle)}}
+    v-toolbar-title {{ pageTitle }}
     v-spacer
     v-menu(offset-y)
       v-btn(icon, dark, slot="activator")
@@ -68,6 +68,7 @@ import { mapState } from 'vuex'
 export default {
   data () {
     return {
+      Title: 'An admin dashboard',
       dark: false,
       theme: 'primary',
       mini: false,

@@ -35,5 +35,11 @@ module.exports = {
         error: 'an error has occured trying to search kanji'
       })
     }
+  },
+  index(req, res) {
+    console.log(req.body)
+    res.status(500).send({
+      error: 'Ahihi nani yatterun no!'
+    })
   }
 }
