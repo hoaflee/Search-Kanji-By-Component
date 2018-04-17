@@ -27,5 +27,6 @@ export default {
   'Title': 'タイトル',
   'Create {}': '登録',
   'Page Not Found.': 'ページが見つかりません',
-  'An admin dashboard': '管理ダッシュボード'
+  'An admin dashboard': '管理ダッシュボード',
+  'Kanji Selection': '漢字選択'
 }

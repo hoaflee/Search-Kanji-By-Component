@@ -1,19 +1,29 @@
 <template lang="pug">
-  .row.outline-example
-    .col-xs-4.col-lg-4.col-md-4.col-sm-4
-      ProductZoomer(:base-images="images" :base-zoomer-options="zoomerOptions")
-    .col-xs-6.col-lg-6.col-md-6.col-sm-6
+  v-layout(row)
+    v-flex(xs8)
+      .col-xs-6.col-lg-6.col-md-6.col-sm-6
+        ProductZoomer(:base-images="images" :base-zoomer-options="zoomerOptions")
+      //- .col-xs-8.col-lg-8.col-md-8.col-sm-8
+    v-flex(xs4)
       h3 入力項目
-      v-text-field(label="項目１")
-      v-text-field(label="項目２")
-      v-text-field(label="項目３")
-      v-text-field(label="項目４")
+        v-layout(row)
+          v-flex(xs8)
+            v-text-field(label="項目１")
+          v-flex(xs4)
+            Dialog
+        v-text-field(label="項目２")
+        v-text-field(label="項目３")
+        v-text-field(label="項目４")
 </template>
 
 <script>
 import ProductZoomer from 'vue-product-zoomer'
-
+import Dialog from './Dialog'
 export default {
+  components: {
+    ProductZoomer,
+    Dialog
+  },
   data () {
     return {
       'images': {
@@ -73,20 +83,17 @@ export default {
         ]
       },
       'zoomerOptions': {
-        'zoomFactor': 3,
+        'zoomFactor': 5,
         'pane': 'pane',
-        'hoverDelay': 300,
+        'hoverDelay': 150,
         'namespace': 'zoomer',
         'move_by_click': false
       }
     }
   },
 
-  components: {
-    ProductZoomer
-  },
-
   mounted () {
   }
 }
 </script>
+

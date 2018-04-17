@@ -20,7 +20,7 @@ v-app(:dark="dark",standalone)
             v-list-tile-action
               v-icon() {{ item.icon }}
             v-list-tile-content
-              v-list-tile-title {{ item.title }}
+              v-list-tile-title {{$t("item.title")}}
             v-list-tile-action
               v-icon() keyboard_arrow_down
           
@@ -40,7 +40,7 @@ v-app(:dark="dark",standalone)
             v-icon.success--text {{ item.subAction }}
   v-toolbar.darken-1(fixed,dark,:class="theme") 
     v-toolbar-side-icon(dark, @click.stop='drawer = !drawer')
-    v-toolbar-title {{ pageTitle }}
+    v-toolbar-title {{$t(pageTitle)}}
     v-spacer
     v-menu(offset-y)
       v-btn(icon, dark, slot="activator")
