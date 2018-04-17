@@ -2,8 +2,8 @@
 v-app(:dark="dark",standalone)
   v-navigation-drawer(v-model='drawer',:mini-variant.sync="mini", persistent,enable-resize-watcher, :dark="dark")
     .pa-3.text-xs-center(v-show="!mini")
-      div.display-2.py-4 Adminify
-      p {{Title}}
+      div.display-2.py-4 {{Title}}
+      p {{subTitle}}
       div(style="padding-left:5em")
         v-switch(:label="(!dark ? 'Light' : 'Dark') + ' Theme'", v-model="dark", :dark="dark", hide-details)
       //- div
@@ -68,7 +68,8 @@ import { mapState } from 'vuex'
 export default {
   data () {
     return {
-      Title: 'An admin dashboard',
+      Title: 'BBS',
+      subTitle: 'BBS admin dashboard',
       dark: false,
       theme: 'primary',
       mini: false,
