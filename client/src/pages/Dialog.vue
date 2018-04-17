@@ -16,8 +16,6 @@
 </template>
 
 <script>
-import ComponentsServices from '@/services/ComponentsServices'
-
 export default {
   data () {
     return {
@@ -30,9 +28,6 @@ export default {
       global.helper.ls.set('locale', to)
       this.$i18n.locale = to
     }
-  },
-  async mounted () {
-    this.components = (await ComponentsServices.index()).data
   }
 }
 </script>

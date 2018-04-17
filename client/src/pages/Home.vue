@@ -91,8 +91,8 @@ export default {
       }
     }
   },
-
-  mounted () {
+  created () {
+    this.$http.get('components')
   }
 }
 </script>

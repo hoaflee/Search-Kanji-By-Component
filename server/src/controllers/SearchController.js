@@ -1,4 +1,5 @@
-const { Kanji } = require('../models')
+const { Kanji, Component } = require('../models')
+
 const config = require('../config/config')
 const part = require('path')
 var _ = require('lodash');
@@ -33,6 +34,20 @@ module.exports = {
     } catch (err) {
       res.status(500).send({
         error: 'an error has occured trying to search kanji'
+      })
+    }
+  },
+  async components(req, res) {
+    try {
+      let components = null
+      components = await Component.findAll({
+        attributes: ['stroke','part']
+        // group: ['stroke']
+      })
+      res.send(components)
+    } catch (err) {
+      res.status(500).send({
+        error: 'an error has occured trying to search components'
       })
     }
   },
