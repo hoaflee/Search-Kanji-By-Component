@@ -42,8 +42,12 @@ module.exports = {
       let components = null
       components = await Component.findAll({
         attributes: ['stroke','part']
-        // group: ['stroke']
       })
+      const result = {
+        gaijis: _.flatMap(kanjis, 'gaiji'),
+        parts: _.differenceWith(uniqParts, searchKeyArray, _.isEqual),
+        selectedParts: _.intersectionWith(uniqParts, searchKeyArray, _.isEqual)
+      }
       res.send(components)
     } catch (err) {
       res.status(500).send({
