@@ -16,6 +16,7 @@ module.exports = {
       }
       const searchKeyArray = _.map(_.uniq(searchKey.split(',').filter(Boolean)), _.trim)
       kanjis = await Kanji.findAll({
+        attributes: ['gaiji','part'],
         where: {
           $and: searchKeyArray.map(key => ({
             'part': {
@@ -43,12 +44,13 @@ module.exports = {
       components = await Component.findAll({
         attributes: ['stroke','part']
       })
-      const result = {
-        gaijis: _.flatMap(kanjis, 'gaiji'),
-        parts: _.differenceWith(uniqParts, searchKeyArray, _.isEqual),
-        selectedParts: _.intersectionWith(uniqParts, searchKeyArray, _.isEqual)
-      }
-      res.send(components)
+
+      const result = _(components)
+        .groupBy(x => x.stroke)
+        // .map((value, key) => ({ "stroke" : key, "part": _.map(value, 'part') }))
+        .map((value, key) => ({ "stroke" : key, "part": value }))
+
+      res.send(result)
     } catch (err) {
       res.status(500).send({
         error: 'an error has occured trying to search components'

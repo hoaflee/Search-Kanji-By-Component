@@ -90,9 +90,6 @@ export default {
         'move_by_click': false
       }
     }
-  },
-  created () {
-    this.$http.get('components')
   }
 }
 </script>
