@@ -2,27 +2,46 @@
   v-dialog(v-model="dialog" width="80%")
     v-btn(slot="activator" primary dark @click="resetAll")
       v-icon search
-    v-card
-      v-card-title        
-        span.headline {{$t('Kanji Selection')}}
-        
-      v-card-text          
-        v-btn(v-for="gaiji in sRes.gaijis" :key="gaiji") {{gaiji}}
-
-        v-layout(align-center justify-center)
+    v-flex
+      v-card()
+        v-fle(xs7)
           div
-            span(v-for="comps in components" :key="comps.stroke")
-              button(type="button" class="btn-stroke" :disabled="1") {{comps.stroke}}              
-              button(type="button" v-for="part in comps.part" :id="part.part" @click="addkey(part.part)" ) {{part.part}}
-    
+            div(class="headline") KANJI
+        v-flex(xs5)
+          v-card-text
+            v-btn(v-for="gaiji in sRes.gaijis.slice(0,20)"  :key="gaiji" @click="selectKanji(gaiji)") {{gaiji}}
+            v-spacer
+            v-expansion-panel(v-if="sRes.gaijis.length > 20")
+              v-expansion-panel-content
+                div(slot="header") show more
+                v-card
+                  v-card-text(class="grey lighten-3") 
+                    v-btn(v-for="gaiji in sRes.gaijis.slice(Math.max(21, 1))" :key="gaiji" @click="selectKanji(gaiji)") {{gaiji}}
+    v-flex
+      v-card()
+        v-fle(xs7)
+          div
+            div(class="headline") Selected Part
+        v-flex(xs5)
+          v-card-text
+            v-btn(primary v-for="slted in sRes.selectedParts" :key="slted") {{slted}}
+    v-flex
+      v-card
+        v-card-title
+          v-layout(align-center justify-center)
+            div
+              span(v-for="comps in components" :key="comps.stroke")
+                button(type="button" class="btn-stroke" :disabled="1") {{comps.stroke}}
+                span(v-for="part in comps.part" :id="part.part")
+                  button(v-if="sRqCount === 0 || sRes.parts.includes(part.part)" type="button" :id="part.part" @click="addkey(part.part)" class="btn-available") {{part.part}}
+                  button(v-else type="button" :id="part.part" @click="addkey(part.part)" :disabled="1" class="btn-disabled") {{part.part}}    
 </template>
 
 <script>
-// const _ = require('lodash')
-
 export default {
   data () {
     return {
+      sRqCount: 0,
       keyList: [],
       components: null,
       sRes: {
@@ -36,6 +55,7 @@ export default {
   },
   methods: {
     resetAll () {
+      this.sRqCount = 0
       this.keyList = []
       this.sRes.gaijis = []
       this.sRes.parts = []
@@ -52,6 +72,7 @@ export default {
       this.$i18n.locale = to
     },
     sentReq () {
+      this.sRqCount ++
       const qrVal = this.listCommaSeparated()
       this.$http.get('search', {params: {
         key: qrVal
@@ -62,6 +83,9 @@ export default {
     },
     listCommaSeparated () {
       return this.keyList.join(',')
+    },
+    selectKanji (gaiji) {
+      alert(gaiji)
     }
   },
   async mounted () {
@@ -76,13 +100,11 @@ export default {
 button {
   width: 35px;
   height: 35px;
-  /* padding: 1px; */
-  /* border: solid #b2b6b8 0.1px; */
   text-decoration: none;
   font-size: 25px;
 }
 
-button:hover {
+.btn-available:hover {
   background: #a4d4f2;
   text-decoration: none;
 }
@@ -105,6 +127,11 @@ button:hover {
   background-image: -ms-linear-gradient(top, #3cb0fd, #3498db);
   background-image: -o-linear-gradient(top, #3cb0fd, #3498db);
   background-image: linear-gradient(to bottom, #3cb0fd, #3498db);
+  text-decoration: none;
+}
+
+.btn-disabled {
+  color: #e6e7ed;
   text-decoration: none;
 }
 

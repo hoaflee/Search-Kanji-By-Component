@@ -1,9 +1,12 @@
 export default [
   { 'header': 'Admin' },
   { 'href': '/', 'title': 'Home', 'icon': 'home' },
-  { 'href': '/crud/types', 'title': 'Types', 'icon': 'view_list' },
-  { 'href': '/crud/posts', 'title': 'Posts', 'icon': 'view_list' },
+  { 'href': '/crud/comps', 'title': 'Components', 'icon': 'view_list' },
+  { 'href': '/crud/gaijis', 'title': 'Gaijis', 'icon': 'view_list' },
   { 'href': '/crud/posts/create', 'title': 'Create Post', 'icon': 'note_add' },
+  // { 'href': '/crud/types', 'title': 'Types', 'icon': 'view_list' },
+  // { 'href': '/crud/posts', 'title': 'Posts', 'icon': 'view_list' },
+  // { 'href': '/crud/posts/create', 'title': 'Create Post', 'icon': 'note_add' },
 
   // { 'href': '/crud/comments', 'title': 'Comments', 'icon': 'view_list' },
   // { 'href': '/crud/users', 'title': 'Users', 'icon': 'people' },

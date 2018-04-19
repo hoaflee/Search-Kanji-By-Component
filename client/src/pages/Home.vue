@@ -8,7 +8,12 @@
       h3 入力項目
         v-layout(row)
           v-flex(xs8)
-            v-text-field(label="項目１")
+            v-text-field(label="項目１" v-model="kanji")
+          v-flex(xs4)
+            Dialog
+        v-layout(row)
+          v-flex(xs8)
+            v-text-field(label="項目１2" v-model="kanji")
           v-flex(xs4)
             Dialog
         v-text-field(label="項目２")

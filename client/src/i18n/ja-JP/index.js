@@ -13,6 +13,8 @@ export default {
   'User': 'ユーザー',
   'Types': 'タイプ',
   'Type': 'タイプ',
+  'Components': '成分',
+  'Gaijis': '外字',
   'Create Post': 'ポストを作成',
   'Comments': 'コメント',
   'Comment': 'コメント',
