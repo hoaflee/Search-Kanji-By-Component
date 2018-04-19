@@ -29,7 +29,7 @@ module.exports = {
       const result = {
         gaijis: _.flatMap(kanjis, 'gaiji'),
         parts: _.differenceWith(uniqParts, searchKeyArray, _.isEqual),
-        selectedParts: _.intersectionWith(uniqParts, searchKeyArray, _.isEqual)
+        selectedParts: searchKeyArray
       }
       res.send(result)
     } catch (err) {

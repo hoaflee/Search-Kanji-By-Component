@@ -1,46 +1,71 @@
 <template lang="pug">
   v-dialog(v-model="dialog" width="80%")
-    v-btn(slot="activator" primary dark)
+    v-btn(slot="activator" primary dark @click="resetAll")
       v-icon search
     v-card
-      v-card-title
+      v-card-title        
         span.headline {{$t('Kanji Selection')}}
-      v-card-text
-        div
-          p 
+        
+      v-card-text          
+        v-btn(v-for="gaiji in sRes.gaijis" :key="gaiji") {{gaiji}}
+
         v-layout(align-center justify-center)
           div
             span(v-for="comps in components" :key="comps.stroke")
               button(type="button" class="btn-stroke" :disabled="1") {{comps.stroke}}              
-              button(type="button" v-for="part in comps.part" :key="part.part" :id="part.part" @click="search" ) {{part.part}}
+              button(type="button" v-for="part in comps.part" :id="part.part" @click="addkey(part.part)" ) {{part.part}}
+    
 </template>
 
 <script>
+// const _ = require('lodash')
+
 export default {
   data () {
     return {
-      keyList: null,
+      keyList: [],
       components: null,
-      // part: null,
+      sRes: {
+        gaijis: [],
+        parts: [],
+        selectedParts: []
+      },
       dialogm1: '',
       dialog: false
     }
   },
   methods: {
-    search: (event) => {
-      const newKey = event.currentTarget.id
-      if (this.keyList.indexOf(newKey) === -1) {
-        this.keyList.push(newKey)
+    resetAll () {
+      this.keyList = []
+      this.sRes.gaijis = []
+      this.sRes.parts = []
+      this.sRes.selectedParts = []
+    },
+    addkey (key) {
+      if (!this.keyList.includes(key)) {
+        this.keyList.push(key)
+        this.sentReq()
       }
-      console.log(this.keyList)
     },
     changeLocale (to) {
       global.helper.ls.set('locale', to)
       this.$i18n.locale = to
+    },
+    sentReq () {
+      const qrVal = this.listCommaSeparated()
+      this.$http.get('search', {params: {
+        key: qrVal
+      }})
+        .then(({data}) => {
+          this.sRes = data
+        })
+    },
+    listCommaSeparated () {
+      return this.keyList.join(',')
     }
   },
-  mounted () {
-    this.$http.get('components')
+  async mounted () {
+    await this.$http.get('components')
       .then(({data}) => {
         this.components = data
       })
