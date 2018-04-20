@@ -71,10 +71,10 @@ export default {
       global.helper.ls.set('locale', to)
       this.$i18n.locale = to
     },
-    sentReq () {
+    async sentReq () {
       this.sRqCount ++
       const qrVal = this.listCommaSeparated()
-      this.$http.get('search', {params: {
+      await this.$http.get('search', {params: {
         key: qrVal
       }})
         .then(({data}) => {
