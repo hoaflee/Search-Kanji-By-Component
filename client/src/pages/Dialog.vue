@@ -3,28 +3,27 @@
     v-btn(slot="activator" primary dark @click="resetAll")
       v-icon search
     v-flex
-      v-card()
-        v-fle(xs7)
-          div
-            div(class="headline") KANJI
-        v-flex(xs5)
-          v-card-text
-            v-btn(v-for="gaiji in sRes.gaijis.slice(0,20)"  :key="gaiji" @click="selectKanji(gaiji)") {{gaiji}}
-            v-spacer
-            v-expansion-panel(v-if="sRes.gaijis.length > 20")
-              v-expansion-panel-content
-                div(slot="header") show more
-                v-card
-                  v-card-text(class="grey lighten-3") 
-                    v-btn(v-for="gaiji in sRes.gaijis.slice(Math.max(21, 1))" :key="gaiji" @click="selectKanji(gaiji)") {{gaiji}}
+      v-card
+        div(class="headline") KANJI
+        v-card-text
+          v-btn(v-for="gaiji in sRes.gaijis.slice(0,20)"  :key="gaiji" @click="selectKanji(gaiji)") {{gaiji}}
+          v-spacer
+          v-expansion-panel(v-if="sRes.gaijis.length > 20")
+            v-expansion-panel-content
+              div(slot="header") show more
+              v-card
+                v-card-text(class="grey lighten-3") 
+                  v-btn(v-for="gaiji in sRes.gaijis.slice(Math.max(21, 1))" :key="gaiji" @click="selectKanji(gaiji)") {{gaiji}}
     v-flex
-      v-card()
+      v-card
         v-fle(xs7)
           div
             div(class="headline") Selected Part
         v-flex(xs5)
           v-card-text
-            v-btn(primary v-for="slted in sRes.selectedParts" :key="slted") {{slted}}
+            v-btn(flat icon color="green" @click="resetAll")
+              v-icon clear
+            v-btn(round primary v-for="slted in sRes.selectedParts" :key="slted" @click="removekey(slted)") {{slted}}
     v-flex
       v-card
         v-card-title
@@ -66,6 +65,14 @@ export default {
         this.keyList.push(key)
         this.sentReq()
       }
+    },
+    removekey (key) {
+      this.keyList = this.keyList.filter(item => {
+        return item !== key
+      })
+      if (this.keyList.length === 0) {
+        this.resetAll()
+      } else this.sentReq()
     },
     changeLocale (to) {
       global.helper.ls.set('locale', to)
